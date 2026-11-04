@@ -47,6 +47,8 @@
   ul.pend li { display: flex; gap: 10px; align-items: flex-start; font-size: 14.5px; margin-bottom: 10px; }
   ul.pend li .box { width: 16px; height: 16px; min-width:16px; border: 1.5px solid #c9b6ac; border-radius: 4px; margin-top: 2px; }
   .pend-vazio { font-size: 14px; color: var(--suave); font-style: italic; padding: 10px 0; }
+  .pend-sub-label { font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--suave); margin: 14px 0 2px; }
+  ul.pend.sub li { opacity: 0.68; font-size: 13.5px; }
 
   /* etapas — cards de fase/frente */
   .etapa-card { background: #fff; border: 1px solid var(--borda); border-radius: 10px; margin-bottom: 10px; padding: 13px 15px 14px; }
@@ -58,6 +60,11 @@
   .etapa-card ul { margin: 0; padding-left: 20px; font-size: 14px; }
   .etapa-card ul li { margin-bottom: 5px; }
   .etapa-card p.nota { font-size: 13px; color: var(--suave); margin: 8px 0 0; }
+  .etapa-card table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 8px; }
+  .etapa-card table th, .etapa-card table td { border: 1px solid var(--borda); padding: 5px 7px; text-align: left; vertical-align: top; }
+  .etapa-card table th { background: var(--areia); color: var(--marrom); font-weight: 600; }
+  .etapa-card h4 { font-size: 13.5px; color: var(--marrom); margin: 12px 0 4px; }
+  .etapa-card h4:first-child { margin-top: 0; }
 
   /* conteúdo original do skincare (acordeão) */
   details {
@@ -106,9 +113,7 @@
 
 <h2>✅ Pendências</h2>
 <div class="pend-box">
-<ul class="pend">
-  <li><span class="box"></span> Reavaliar a mília do queixo — janela de observação aberta de 09/11 a 07/12 (ver seção Azelan abaixo)</li>
-</ul>
+<p class="pend-vazio">Nenhuma pendência aberta — reavaliação da mília feita em 04/11, sem problema.</p>
 </div>
 
 <h2>📋 Etapas — rotina da semana</h2>
@@ -260,7 +265,7 @@
 <h2>Azelan — queixo (mília)</h2>
 <div class="fixo">
 <p style="font-size:14.5px;margin:12px 0 0">Manhã, <strong>só no queixo</strong>, antes do creme e do protetor. Receitado pra <strong>mília</strong> nessa área — não passa no rosto todo. ✅ <strong>Janela de adaptação fechada sem reação</strong> — pele se manteve estável no queixo o período inteiro, item estabelecido da rotina. Ele impede mília <strong>nova</strong>; as que já existem não saem com creme, só com extração no dermatologista — <strong>nunca espremer em casa</strong>. <strong>Pula só o domingo de manhã</strong> — é o único dia em que o queixo já leva ácido à noite. Nos outros 6 dias, o queixo é dele; o resto da rotina não muda.</p>
-<p style="font-size:13.5px;color:#8b8079;font-style:italic;margin:10px 0 0">🔍 <strong>Janela de reavaliação aberta: 09/11 a 07/12.</strong> A mília sempre existiu, sem gatilho datável — padrão de mília primária, que não vem de produto nem de oclusão.</p>
+<p style="font-size:13.5px;color:#8b8079;font-style:italic;margin:10px 0 0">✅ <strong>Janela de reavaliação fechada em 04/11, sem problema.</strong> Mília nova parou de aparecer — Azelan + retinol mostraram o efeito esperado no prazo previsto.</p>
 </div>
 
 <h2>Se a pele reclamar</h2>
@@ -287,7 +292,15 @@
 <h2>✅ Pendências</h2>
 <div class="pend-box">
 <ul class="pend">
-  <li><span class="box"></span> Checar velocidade de upload da internet na chácara (fibra/cabo vs 4G) — crítico pro desenho do streaming</li>
+  <li><span class="box"></span> <strong>Falar com o primo</strong> sobre a construção — alinhar o que ele vai montar (telas, telhado, acabamento) depois que o pedreiro entregar a base de tijolo</li>
+  <li><span class="box"></span> <strong>Orçar quantidade e valor dos materiais</strong> da estrutura física (madeira, tela/rede, telha metálica, palha, poleiro)</li>
+  <li><span class="box"></span> <strong>Desenhar a estrutura com medidas reais</strong> (galinheiro fechado + cercado externo) — hoje só existe a foto de inspiração como referência de estilo</li>
+  <li><span class="box"></span> <strong>Avaliar a lista de compras do protótipo</strong> (eletrônica) antes de comprar</li>
+  <li><span class="box"></span> <strong>Fazer as compras do protótipo</strong> — pode rodar em paralelo com a parte 1–3 (estrutura/chácara)</li>
+</ul>
+<p class="pend-sub-label">Depois / não urgente agora</p>
+<ul class="pend sub">
+  <li><span class="box"></span> Checar velocidade de upload da internet na chácara (fibra/cabo vs 4G)</li>
   <li><span class="box"></span> Validar no protótipo se o notebook aguenta compor 2–3 câmeras em mosaico sem travar</li>
   <li><span class="box"></span> Definir tempo mínimo de exibição por câmera na fila de troca (ex: 10–15s)</li>
   <li><span class="box"></span> Decidir se vale estudar energia solar+bateria como backup</li>
@@ -300,28 +313,107 @@
 <h2>📋 Etapas</h2>
 
 <div class="etapa-card">
+<h3>Parâmetros do projeto <span class="status feito">definido</span></h3>
+<ul>
+  <li><strong>Local:</strong> chácara própria, área rural, ~50m² total. Já tem animais na propriedade e energia elétrica interna disponível.</li>
+  <li><strong>Animais:</strong> 6 galinhas (sem raça definida), 1 pintinho, 1 ovo chocando — já garantidos. Veterinário de aves disponível na região.</li>
+  <li><strong>Construção:</strong> pedreiro faz só a base (alvenaria/concreto elevado) do galinheiro fechado. Montagem de telas, telhado e acabamento é em família — <strong>o primo</strong> é quem toca essa parte.</li>
+  <li><strong>Janela de execução:</strong> 23/dez a 03/jan (12 dias, férias). A parte do pedreiro roda fora dessa janela, já estará pronta. A janela cobre: montagem das telas/telhado + toda a automação.</li>
+  <li><strong>Orçamento teto:</strong> R$ 10.000 (estrutura + eletrônica) — objetivo é ficar bem abaixo disso.</li>
+</ul>
+</div>
+
+<div class="etapa-card">
+<h3>Estrutura física <span class="status pendente">falta desenho detalhado</span></h3>
+<ul>
+  <li><strong>Galinheiro fechado:</strong> base elevada em alvenaria/concreto (proteção contra umidade e predadores que cavam), estrutura de madeira, telas/rede nas laterais, telhado de telha metálica inclinado. Chão com palha/feno. Poleiro comprado pronto.</li>
+  <li><strong>Cercado externo (área de soltura, dentro dos 50m²):</strong> muro baixo + rede, mesmo padrão mas <strong>sem telhado</strong>.</li>
+  <li>Sem porta automática, sem bebedouro automático, sem monitoramento de temperatura por enquanto — tudo manual nessas 3 frentes.</li>
+</ul>
+<p class="nota">⚠️ O que existe até agora é só a <strong>referência de estilo</strong> (foto de inspiração, decidido 04/11) — ainda falta o desenho construtivo com medidas reais (dimensões, altura, inclinação do telhado). Esse desenho é pré-requisito pra orçar material.</p>
+</div>
+
+<div class="etapa-card">
+<h3>Streaming <span class="status feito">definido</span></h3>
+<ul>
+  <li><strong>Plataforma: Twitch</strong> — monetização (Bits, assinaturas, Channel Points) liberada desde o dia 1, sem exigir status Affiliate. YouTube Live travaria receita de canal novo (regra de elegibilidade subiu em fev/2026). Precedente: <a href="https://en.wikipedia.org/wiki/Alveus_Sanctuary" target="_blank">Alveus Sanctuary</a>, farm cam 24h na Twitch.</li>
+  <li>Transmissão contínua: teto de 48h por broadcast, encoder reconecta sozinho — stream 24/7 não-atendido é permitido.</li>
+  <li><strong>Câmeras:</strong> mosaico com 2–3 câmeras IP PoE numa cena só do OBS, conectadas via Ethernet/PoE (não Wi-Fi).</li>
+  <li><strong>Áudio:</strong> incluído — som ambiente (cacarejo) faz parte do apelo do formato, custo baixo.</li>
+  <li>Troca de câmera/cena é <strong>interativa, controlada pelo público</strong> (ver Arquitetura técnica).</li>
+</ul>
+</div>
+
+<div class="etapa-card">
+<h3>Arquitetura técnica — hub + comandos <span class="status andamento">em validação</span></h3>
+<ul>
+  <li><strong>Hub central:</strong> notebook da Cami (já existe, R$0 adicional), dedicado de vez. Roda OBS (mosaico + envio pro Twitch) e um script escutando eventos via <strong>Twitch EventSub</strong>. Precisa ficar ligado 24h na chácara, na mesma rede das câmeras. Falta validar no protótipo se aguenta 2–3 câmeras sem travar.</li>
+</ul>
+<table>
+<tr><th>Mecanismo</th><th>Ação disparada</th><th>Custa?</th></tr>
+<tr><td><strong>Bits (Cheer)</strong></td><td>Alimentar (ponto 1 ou 2)</td><td>Sim</td></tr>
+<tr><td><strong>Subscription</strong></td><td>X alimentações garantidas/mês por tier</td><td>Sim</td></tr>
+<tr><td><strong>Channel Points</strong> (grátis, ganho assistindo)</td><td>Trocar câmera/cena via OBS WebSocket</td><td>Não</td></tr>
+</table>
+<p class="nota">Conflito de alimentar: sem problema real, motores independentes. Conflito de trocar câmera: fila com tempo mínimo de exibição por câmera (evita "piscar") — tempo exato ainda a definir no protótipo.</p>
+</div>
+
+<div class="etapa-card">
+<h3>Alimentação automatizada por doação <span class="status feito">definido</span></h3>
+<ul>
+  <li><strong>2 pontos, por zona:</strong> Ponto 1 (dentro do galinheiro fechado) serve a chocando + o pintinho; Ponto 2 (pátio externo) serve as 6 adultas.</li>
+  <li><strong>Mecanismo:</strong> evento Bits/assinatura → EventSub avisa o script → script manda comando pro ESP32 → aciona relé/servo → dispensa ração via rosca sem-fim (auger).</li>
+  <li><strong>Porção fixa e igual</strong> por disparo, qualquer valor de doação.</li>
+  <li><strong>Sem cooldown por enquanto</strong> (decisão da Cami) — testar na prática; porção fixa pequena já mitiga pico de doações.</li>
+</ul>
+</div>
+
+<div class="etapa-card">
+<h3>Orçamento estimado (eletrônica + câmeras) <span class="status feito">dentro do teto</span></h3>
+<table>
+<tr><th>Item</th><th>Estimativa</th></tr>
+<tr><td>2–3 câmeras IP PoE outdoor</td><td>R$ 1.500 – 2.700</td></tr>
+<tr><td>Switch PoE + cabeamento</td><td>R$ 300 – 500</td></tr>
+<tr><td>2 pontos de alimentação (ESP32 + servo + auger)</td><td>R$ 250 – 350</td></tr>
+<tr><td>Hub (notebook já existente)</td><td>R$ 0</td></tr>
+<tr><td>Reserva (chuva/umidade, cabo extra, imprevistos)</td><td>R$ 1.000</td></tr>
+<tr><td><strong>Total estimado</strong></td><td><strong>R$ 3.100 – 4.900</strong></td></tr>
+</table>
+<p class="nota">Bem abaixo do teto de R$ 10.000 — ainda falta orçar a parte de estrutura física (ver card acima), que entra nessa mesma margem.</p>
+</div>
+
+<div class="etapa-card">
+<h3>Lista de compras — protótipo e instalação final (mesmo hardware) <span class="status pendente">a avaliar</span></h3>
+<ul>
+  <li><strong>Por ponto de alimentação (2x de cada):</strong> ESP32 DevKit (ESP32-WROOM-32) · servo de rotação contínua MG995/MG996R · fonte externa 5V (não puxar do pino do ESP32) · rosca sem-fim (auger, kit pronto ou 3D) · reservatório (funil + PVC) · caixa à prova d'água (ponto externo)</li>
+  <li><strong>Câmeras (2–3, mesma marca):</strong> Reolink P334/RLC-510A ou Intelbras VIP 1430 D (R$490–900 cada) · switch PoE 4 portas · cabo de rede outdoor-rated</li>
+  <li><strong>Opcional:</strong> microfone USB simples, pra validar se vale incluir áudio</li>
+  <li><strong>Já em mãos:</strong> hub (notebook)</li>
+</ul>
+</div>
+
+<div class="etapa-card">
 <h3>Fase 1 — Protótipo em casa <span class="status andamento">em andamento</span></h3>
 <ul>
   <li>Canal Twitch criado, Subscriptions + Bits + Channel Points configurados (rewards "Alimentar galinheiro", "Alimentar pátio", "Ver galinheiro", "Ver pátio")</li>
-  <li>Script no notebook recebendo eventos via EventSub (testável com doação/resgate simulado)</li>
-  <li>Eventos disparando os 2 protótipos de comedouro (ESP32 + servo) e trocando cena no OBS via WebSocket</li>
-  <li>Câmeras montadas em casa, OBS compondo o mosaico e subindo pro Twitch — valida se o notebook aguenta</li>
-  <li><strong>Critério de "pronto pra ir pra chácara":</strong> fluxo completo (alimentar + trocar câmera) funcionando de ponta a ponta</li>
+  <li>Script no notebook recebendo eventos via EventSub (testável com doação/resgate simulado, sem precisar de dinheiro real)</li>
+  <li>Eventos disparando os 2 protótipos de comedouro (ESP32 + servo, ração de teste) e trocando cena no OBS via WebSocket</li>
+  <li>Câmeras montadas em qualquer superfície em casa, OBS compondo o mosaico e subindo pro Twitch — valida se o notebook aguenta ou se precisa hardware dedicado</li>
+  <li><strong>Critério de "pronto pra ir pra chácara":</strong> fluxo completo (alimentar + trocar câmera) funcionando de ponta a ponta, decisão tomada sobre o hub definitivo</li>
 </ul>
 </div>
 
 <div class="etapa-card">
 <h3>Fase 2 — Instalação (23/dez–03/jan) <span class="status pendente">a fazer</span></h3>
 <ul>
-  <li>Fixar câmeras nos pontos finais</li>
-  <li>Levar os 2 comedouros pro galinheiro/pátio</li>
+  <li>Só montagem física: fixar câmeras nos pontos finais, levar os 2 comedouros pro galinheiro/pátio</li>
   <li>Passar cabo PoE outdoor</li>
   <li>Testar em condições reais, ir ao ar</li>
 </ul>
-<p class="nota">Construção com pedreiro roda fora dessa janela — fica pronta antes.</p>
+<p class="nota">Construção com pedreiro + primo roda fora dessa janela — precisa estar pronta antes de 23/dez.</p>
 </div>
 
-<p style="font-size:13px;color:var(--suave);margin-top:4px">Plano técnico completo (orçamento, lista de compras, arquitetura): ver <strong>tasks/2026-11-04-galinheiro-automatizado.md</strong> no vault.</p>
+<p style="font-size:13px;color:var(--suave);margin-top:4px">Fonte completa: <strong>tasks/2026-11-04-galinheiro-automatizado.md</strong> no vault.</p>
 
 </div>
 
@@ -331,15 +423,18 @@
 <h2>✅ Pendências</h2>
 <div class="pend-box">
 <ul class="pend">
-  <li><span class="box"></span> Polish visual do formulário (v2)</li>
-  <li><span class="box"></span> Montar fluxo de e-mail de carrinho abandonado (checkout iniciado, não finalizado)</li>
-  <li><span class="box"></span> Trocar destino do redirect pós-compra pro WhatsApp (Hotmart não suporta URL dinâmica por transação)</li>
+  <li><span class="box"></span> Decidir se publica o link do diagnóstico já, ou espera o checkout por estilo ficar pronto</li>
   <li><span class="box"></span> Ligar o resultado do diagnóstico (estilo) a um checkout/link de pagamento específico</li>
   <li><span class="box"></span> Redesenhar o redirect pós-pagamento pra entregar o guia certo</li>
   <li><span class="box"></span> Reescrever do zero a copy dos 7 criativos (5–11) — nenhum será gravado como está</li>
   <li><span class="box"></span> Gravar/montar os criativos</li>
+</ul>
+<p class="pend-sub-label">Depois / não urgente agora</p>
+<ul class="pend sub">
   <li><span class="box"></span> Configurar campanha no Meta Ads Manager</li>
-  <li><span class="box"></span> Decidir se publica o link do diagnóstico já, ou espera o checkout por estilo ficar pronto</li>
+  <li><span class="box"></span> Montar fluxo de e-mail de carrinho abandonado (checkout iniciado, não finalizado)</li>
+  <li><span class="box"></span> Trocar destino do redirect pós-compra pro WhatsApp (Hotmart não suporta URL dinâmica por transação)</li>
+  <li><span class="box"></span> Polish visual do formulário (v2)</li>
 </ul>
 </div>
 
