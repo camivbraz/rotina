@@ -3,29 +3,63 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rotina Skincare — Dia a Dia</title>
+<title>Meus Projetos</title>
 <style>
-  :root { --marrom:#7a5c52; --areia:#f5ece8; --borda:#e6d9d2; --texto:#2e2a28; --suave:#8b8079; }
+  :root { --marrom:#7a5c52; --areia:#f5ece8; --borda:#e6d9d2; --texto:#2e2a28; --suave:#8b8079; --verde:#5a7050; --verde-bg:#eef2ea; }
   * { box-sizing: border-box; -webkit-text-size-adjust: 100%; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     color: var(--texto);
     background: #fdfaf8;
     margin: 0;
-    padding: 20px 16px 60px;
+    padding: 16px 16px 60px;
     line-height: 1.5;
     max-width: 640px;
     margin-left: auto;
     margin-right: auto;
     font-size: 16px;
   }
-  h1 { font-size: 24px; color: var(--marrom); margin: 0 0 4px; letter-spacing: -0.5px; }
-  .sub { color: var(--suave); font-size: 13px; margin-bottom: 22px; }
+  h1 { font-size: 22px; color: var(--marrom); margin: 0 0 4px; letter-spacing: -0.5px; }
+  .sub { color: var(--suave); font-size: 13px; margin-bottom: 16px; }
+
+  /* seletor de projeto */
+  .seletor { display: flex; gap: 8px; margin-bottom: 24px; position: sticky; top: 0; background: #fdfaf8; padding: 10px 0; z-index: 10; }
+  .seletor button {
+    flex: 1; border: 1px solid var(--borda); background: #fff; color: var(--marrom);
+    font-size: 14px; font-weight: 600; padding: 10px 6px; border-radius: 10px;
+    cursor: pointer; font-family: inherit;
+  }
+  .seletor button.ativo { background: var(--marrom); color: #fff; border-color: var(--marrom); }
+
+  .view { display: none; }
+  .view.ativo { display: block; }
+
   h2 {
     font-size: 15px; text-transform: uppercase; letter-spacing: 0.8px;
     color: var(--marrom); margin: 30px 0 12px; padding-bottom: 6px;
     border-bottom: 2px solid var(--borda);
   }
+  h2:first-of-type { margin-top: 4px; }
+
+  /* pendências */
+  .pend-box { background: #fff; border: 1px solid var(--borda); border-radius: 10px; padding: 4px 15px 10px; }
+  ul.pend { margin: 10px 0 0; padding-left: 0; list-style: none; }
+  ul.pend li { display: flex; gap: 10px; align-items: flex-start; font-size: 14.5px; margin-bottom: 10px; }
+  ul.pend li .box { width: 16px; height: 16px; min-width:16px; border: 1.5px solid #c9b6ac; border-radius: 4px; margin-top: 2px; }
+  .pend-vazio { font-size: 14px; color: var(--suave); font-style: italic; padding: 10px 0; }
+
+  /* etapas — cards de fase/frente */
+  .etapa-card { background: #fff; border: 1px solid var(--borda); border-radius: 10px; margin-bottom: 10px; padding: 13px 15px 14px; }
+  .etapa-card h3 { margin: 0 0 8px; font-size: 15.5px; color: var(--marrom); display:flex; align-items:center; gap:8px; }
+  .etapa-card .status { font-size: 11px; font-weight:600; padding: 2px 8px; border-radius: 20px; }
+  .status.feito { background: var(--verde-bg); color: var(--verde); }
+  .status.andamento { background: var(--areia); color: #a06b3f; }
+  .status.pendente { background: #f5eceb; color: #a05a5a; }
+  .etapa-card ul { margin: 0; padding-left: 20px; font-size: 14px; }
+  .etapa-card ul li { margin-bottom: 5px; }
+  .etapa-card p.nota { font-size: 13px; color: var(--suave); margin: 8px 0 0; }
+
+  /* conteúdo original do skincare (acordeão) */
   details {
     background: #fff; border: 1px solid var(--borda); border-radius: 10px;
     margin-bottom: 8px; overflow: hidden;
@@ -52,13 +86,32 @@
   .fixo { background: #fff; border: 1px solid var(--borda); border-radius: 10px; padding: 4px 15px 14px; }
   ul.simples { margin: 10px 0 0; padding-left: 20px; }
   ul.simples li { margin-bottom: 7px; font-size: 15px; }
+
   .rodape { margin-top: 34px; font-size: 12.5px; color: #a2968f; text-align: center; }
 </style>
 </head>
 <body>
 
-<h1>Rotina Skincare — Dia a Dia</h1>
-<div class="sub">Toca no dia pra abrir os passos · atualizado em 16/09/2026</div>
+<h1>Meus Projetos</h1>
+<div class="sub">Toca na aba pra trocar de projeto</div>
+
+<div class="seletor">
+  <button class="ativo" data-target="skincare" onclick="trocar('skincare', this)">Skincare</button>
+  <button data-target="galinheiro" onclick="trocar('galinheiro', this)">Galinheiro</button>
+  <button data-target="petala" onclick="trocar('petala', this)">Pétala</button>
+</div>
+
+<!-- ================= SKINCARE ================= -->
+<div class="view ativo" id="skincare">
+
+<h2>✅ Pendências</h2>
+<div class="pend-box">
+<ul class="pend">
+  <li><span class="box"></span> Reavaliar a mília do queixo — janela de observação aberta de 09/11 a 07/12 (ver seção Azelan abaixo)</li>
+</ul>
+</div>
+
+<h2>📋 Etapas — rotina da semana</h2>
 
 <h2>☀️ Manhã — igual todos os dias</h2>
 <div class="fixo">
@@ -201,14 +254,13 @@
   <li><strong>Anua PDRN + Hyaluron Capsule Mist</strong> — a qualquer hora do dia</li>
   <li><strong>Acropass Troublecure Spot Patch</strong> — sobre espinha ativa</li>
   <li><strong>Caudalie Masque Purifiant</strong> (argila verde) — <strong>sábado, 1x/mês</strong>, dentro da sequência do dia. Este até acabar; o Tsururi só depois</li>
-  
 </ul>
 </div>
 
 <h2>Azelan — queixo (mília)</h2>
 <div class="fixo">
-<p style="font-size:14.5px;margin:12px 0 0">Manhã, <strong>só no queixo</strong>, antes do creme e do protetor. Receitado pra <strong>mília</strong> nessa área — não passa no rosto todo. Tubo checado em 04/09, ok. ✅ <strong>Janela de adaptação fechada sem reação</strong> — pele se manteve estável no queixo o período inteiro, item estabelecido da rotina. Ele impede mília <strong>nova</strong>; as que já existem não saem com creme, só com extração no dermatologista — <strong>nunca espremer em casa</strong>. <strong>Pula só o domingo de manhã</strong> — é o único dia em que o queixo já leva ácido à noite. Nos outros 6 dias, o queixo é dele; o resto da rotina não muda.</p>
-<p style="font-size:13.5px;color:#8b8079;font-style:italic;margin:10px 0 0">A mília sempre existiu, sem gatilho datável — padrão de mília primária, que não vem de produto nem de oclusão. Não se previne trocando creme: controla-se com renovação celular, que é o retinol 3x/semana + o Azelan.</p>
+<p style="font-size:14.5px;margin:12px 0 0">Manhã, <strong>só no queixo</strong>, antes do creme e do protetor. Receitado pra <strong>mília</strong> nessa área — não passa no rosto todo. ✅ <strong>Janela de adaptação fechada sem reação</strong> — pele se manteve estável no queixo o período inteiro, item estabelecido da rotina. Ele impede mília <strong>nova</strong>; as que já existem não saem com creme, só com extração no dermatologista — <strong>nunca espremer em casa</strong>. <strong>Pula só o domingo de manhã</strong> — é o único dia em que o queixo já leva ácido à noite. Nos outros 6 dias, o queixo é dele; o resto da rotina não muda.</p>
+<p style="font-size:13.5px;color:#8b8079;font-style:italic;margin:10px 0 0">🔍 <strong>Janela de reavaliação aberta: 09/11 a 07/12.</strong> A mília sempre existiu, sem gatilho datável — padrão de mília primária, que não vem de produto nem de oclusão.</p>
 </div>
 
 <h2>Se a pele reclamar</h2>
@@ -226,6 +278,128 @@
 </div>
 
 <div class="rodape">Rotina montada a partir do inventário de 56 produtos</div>
+
+</div>
+
+<!-- ================= GALINHEIRO ================= -->
+<div class="view" id="galinheiro">
+
+<h2>✅ Pendências</h2>
+<div class="pend-box">
+<ul class="pend">
+  <li><span class="box"></span> Checar velocidade de upload da internet na chácara (fibra/cabo vs 4G) — crítico pro desenho do streaming</li>
+  <li><span class="box"></span> Validar no protótipo se o notebook aguenta compor 2–3 câmeras em mosaico sem travar</li>
+  <li><span class="box"></span> Definir tempo mínimo de exibição por câmera na fila de troca (ex: 10–15s)</li>
+  <li><span class="box"></span> Decidir se vale estudar energia solar+bateria como backup</li>
+  <li><span class="box"></span> Decidir se vai precisar de eletricista, ou se a família dá conta</li>
+  <li><span class="box"></span> Cotar e decidir onde comprar câmeras/ESP32/servos</li>
+  <li><span class="box"></span> Criar canal novo na Twitch, configurar Subscriptions + Bits + Channel Points</li>
+</ul>
+</div>
+
+<h2>📋 Etapas</h2>
+
+<div class="etapa-card">
+<h3>Fase 1 — Protótipo em casa <span class="status andamento">em andamento</span></h3>
+<ul>
+  <li>Canal Twitch criado, Subscriptions + Bits + Channel Points configurados (rewards "Alimentar galinheiro", "Alimentar pátio", "Ver galinheiro", "Ver pátio")</li>
+  <li>Script no notebook recebendo eventos via EventSub (testável com doação/resgate simulado)</li>
+  <li>Eventos disparando os 2 protótipos de comedouro (ESP32 + servo) e trocando cena no OBS via WebSocket</li>
+  <li>Câmeras montadas em casa, OBS compondo o mosaico e subindo pro Twitch — valida se o notebook aguenta</li>
+  <li><strong>Critério de "pronto pra ir pra chácara":</strong> fluxo completo (alimentar + trocar câmera) funcionando de ponta a ponta</li>
+</ul>
+</div>
+
+<div class="etapa-card">
+<h3>Fase 2 — Instalação (23/dez–03/jan) <span class="status pendente">a fazer</span></h3>
+<ul>
+  <li>Fixar câmeras nos pontos finais</li>
+  <li>Levar os 2 comedouros pro galinheiro/pátio</li>
+  <li>Passar cabo PoE outdoor</li>
+  <li>Testar em condições reais, ir ao ar</li>
+</ul>
+<p class="nota">Construção com pedreiro roda fora dessa janela — fica pronta antes.</p>
+</div>
+
+<p style="font-size:13px;color:var(--suave);margin-top:4px">Plano técnico completo (orçamento, lista de compras, arquitetura): ver <strong>tasks/2026-11-04-galinheiro-automatizado.md</strong> no vault.</p>
+
+</div>
+
+<!-- ================= PÉTALA ================= -->
+<div class="view" id="petala">
+
+<h2>✅ Pendências</h2>
+<div class="pend-box">
+<ul class="pend">
+  <li><span class="box"></span> Polish visual do formulário (v2)</li>
+  <li><span class="box"></span> Montar fluxo de e-mail de carrinho abandonado (checkout iniciado, não finalizado)</li>
+  <li><span class="box"></span> Trocar destino do redirect pós-compra pro WhatsApp (Hotmart não suporta URL dinâmica por transação)</li>
+  <li><span class="box"></span> Ligar o resultado do diagnóstico (estilo) a um checkout/link de pagamento específico</li>
+  <li><span class="box"></span> Redesenhar o redirect pós-pagamento pra entregar o guia certo</li>
+  <li><span class="box"></span> Reescrever do zero a copy dos 7 criativos (5–11) — nenhum será gravado como está</li>
+  <li><span class="box"></span> Gravar/montar os criativos</li>
+  <li><span class="box"></span> Configurar campanha no Meta Ads Manager</li>
+  <li><span class="box"></span> Decidir se publica o link do diagnóstico já, ou espera o checkout por estilo ficar pronto</li>
+</ul>
+</div>
+
+<h2>📋 Etapas</h2>
+
+<div class="etapa-card">
+<h3>1. Formulário (diagnóstico) <span class="status feito">praticamente pronto</span></h3>
+<ul>
+  <li>7 outcome pages, pontuação invisível, captura de e-mail — todos testados e publicados</li>
+  <li>Falta só: polish visual v2</li>
+</ul>
+</div>
+
+<div class="etapa-card">
+<h3>2. Página de vendas + checkout <span class="status andamento">em ajuste</span></h3>
+<ul>
+  <li>Página de vendas e produto Hotmart configurados, link de pagamento ativo</li>
+  <li>Falta: fluxo de carrinho abandonado + novo destino do redirect pós-compra</li>
+</ul>
+</div>
+
+<div class="etapa-card">
+<h3>3. Área de membros <span class="status feito">pronto</span></h3>
+<ul>
+  <li>Módulo 1 publicado e ao vivo na Hotmart (boas-vindas + como usar os resultados)</li>
+</ul>
+</div>
+
+<div class="etapa-card">
+<h3>4. Criativos <span class="status pendente">a refazer</span></h3>
+<ul>
+  <li>7 ângulos de copy cobertos (Explicação, Comparação, Apelo Emocional, Problema/Solução, Demonstração, Curiosidades, Reflexão)</li>
+  <li>Nenhum roteiro será gravado como está — Cami não ficou satisfeita na releitura, reescrita do zero necessária antes de gravar</li>
+</ul>
+<p class="nota">Campanha de Meta Ads pausada até a copy nova e o funil novo (abaixo) estarem de pé.</p>
+</div>
+
+<div class="etapa-card">
+<h3>5. Reestruturação do funil <span class="status andamento">em andamento</span></h3>
+<ul>
+  <li>Diagnóstico vira grátis (sem gate do Hotmart na frente)</li>
+  <li>Pagamento (R$37) desbloqueia o guia de guarda-roupa do estilo que saiu</li>
+  <li>✅ Script de e-mail já separa entrega grátis (resultado) de paga (guia) — testado e funcionando</li>
+  <li>Falta: checkout por estilo específico + redirect pós-pagamento novo + copy nova</li>
+</ul>
+</div>
+
+</div>
+
+<div class="rodape" style="margin-top:40px">Hub pessoal — Skincare · Galinheiro · Pétala</div>
+
+<script>
+function trocar(id, btn) {
+  document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('ativo'); });
+  document.getElementById(id).classList.add('ativo');
+  document.querySelectorAll('.seletor button').forEach(function(b){ b.classList.remove('ativo'); });
+  btn.classList.add('ativo');
+  window.scrollTo(0,0);
+}
+</script>
 
 </body>
 </html>
