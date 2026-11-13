@@ -133,6 +133,23 @@
   }
   .reset-btn:hover { color: var(--text); border-color: var(--accent); }
 
+  .detail-toggle {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 14px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    margin: 4px 0 18px;
+  }
+  .detail-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  .detail-toggle .arrow { display: inline-block; transition: transform .15s; margin-left: 4px; }
+  .detail-toggle.open .arrow { transform: rotate(180deg); }
+  .installments-detail { display: none; }
+  .installments-detail.open { display: block; }
+
   .table-wrap { padding: 0 28px 40px; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   thead th {
@@ -227,6 +244,8 @@
 <section class="installments-wrap">
   <h2>Parcelas em andamento — compromissos futuros ainda não cobrados</h2>
   <div class="summary-row" id="installmentsSummary"></div>
+  <button class="detail-toggle" id="installmentsDetailToggle" type="button">Ver detalhamento <span class="arrow">▾</span></button>
+  <div class="installments-detail" id="installmentsDetail">
   <div class="table-wrap">
     <table>
       <thead>
@@ -259,6 +278,7 @@
       <tbody id="mesBodyUnificado"></tbody>
     </table>
     <div class="count muted" id="nuReconciliacaoNota" style="margin-top:6px;"></div>
+  </div>
   </div>
 </section>
 
@@ -656,6 +676,13 @@ document.querySelectorAll('.group-toggle .chip').forEach(c => c.classList.remove
 document.querySelector('.group-toggle .chip[data-group=category]').classList.add('active');
 render();
 renderInstallments();
+
+document.getElementById('installmentsDetailToggle').addEventListener('click', function() {
+  var detail = document.getElementById('installmentsDetail');
+  var open = detail.classList.toggle('open');
+  this.classList.toggle('open', open);
+  this.firstChild.textContent = open ? 'Ocultar detalhamento ' : 'Ver detalhamento ';
+});
 </script>
 </body>
 </html>
