@@ -6,22 +6,22 @@
 <title>Dashboard de Faturas — Nubank + Itaú</title>
 <style>
   :root {
-    --bg: #0f1117;
-    --panel: #171a24;
-    --panel2: #1e222e;
-    --border: #2a2f3d;
-    --text: #e4e6eb;
-    --muted: #8b92a5;
-    --compra: #e4e6eb;
-    --estorno: #4ade80;
-    --cancelamento: #22d3ee;
-    --pagamento: #60a5fa;
-    --internacional: #f59e0b;
-    --iof: #f97316;
-    --outro: #a78bfa;
-    --accent: #f43f5e;
-    --itau-color: #fb923c;
-    --nubank-color: #a855f7;
+    --bg: #fdfaf8;
+    --panel: #ffffff;
+    --panel2: #f5ece8;
+    --border: #e6d9d2;
+    --text: #2e2a28;
+    --muted: #8b8079;
+    --compra: #2e2a28;
+    --estorno: #2f9e44;
+    --cancelamento: #0e7490;
+    --pagamento: #1d4ed8;
+    --internacional: #0d9488;
+    --iof: #c2410c;
+    --outro: #6d28d9;
+    --accent: #be123c;
+    --itau-color: #c05621;
+    --nubank-color: #7e22ce;
   }
   * { box-sizing: border-box; }
   body {
@@ -67,7 +67,7 @@
   .mes-table-wrap td { padding: 6px 8px; font-size: 13px; border-top: 1px solid var(--border); vertical-align: top; }
   .mes-table-wrap .val { text-align: right; white-space: nowrap; font-weight: 600; }
   .mes-table-wrap .mes-itens { color: var(--muted); font-size: 12px; }
-  .mes-table-wrap tr.mes-atual td { background: rgba(255,255,255,0.03); }
+  .mes-table-wrap tr.mes-atual td { background: rgba(0,0,0,0.035); }
   .mes-bar-track { background: var(--border); border-radius: 3px; height: 6px; margin-top: 4px; overflow: hidden; display: flex; }
   .mes-bar-fill { background: var(--internacional); height: 100%; }
   .mes-bar-itau { background: var(--itau-color); height: 100%; }
@@ -112,14 +112,14 @@
     font-size: 12px;
     user-select: none;
   }
-  .chip.active { color: #fff; border-color: transparent; }
+  .chip.active { background: var(--text); color: #fff; border-color: transparent; }
   .chip[data-type=compra].active { background: #4b5061; color: #fff; }
-  .chip[data-type=estorno].active { background: var(--estorno); color: #04240f; }
-  .chip[data-type=cancelamento].active { background: var(--cancelamento); color: #04232a; }
-  .chip[data-type=pagamento].active { background: var(--pagamento); color: #04203f; }
-  .chip[data-type=internacional].active { background: var(--internacional); color: #2a1700; }
-  .chip[data-type=iof].active { background: var(--iof); color: #2a1200; }
-  .chip[data-type=outro_lancamento].active { background: var(--outro); color: #1a0f3f; }
+  .chip[data-type=estorno].active { background: var(--estorno); color: #fff; }
+  .chip[data-type=cancelamento].active { background: var(--cancelamento); color: #fff; }
+  .chip[data-type=pagamento].active { background: var(--pagamento); color: #fff; }
+  .chip[data-type=internacional].active { background: var(--internacional); color: #fff; }
+  .chip[data-type=iof].active { background: var(--iof); color: #fff; }
+  .chip[data-type=outro_lancamento].active { background: var(--outro); color: #fff; }
   .cat-tag { font-size: 11px; color: var(--muted); }
   .reset-btn {
     background: transparent;
@@ -165,13 +165,13 @@
     font-weight: 600;
     white-space: nowrap;
   }
-  .badge.compra { background: #2a2f3d; color: #cfd3dd; }
-  .badge.estorno { background: rgba(74,222,128,.15); color: var(--estorno); }
-  .badge.cancelamento { background: rgba(34,211,238,.15); color: var(--cancelamento); }
-  .badge.pagamento { background: rgba(96,165,250,.15); color: var(--pagamento); }
-  .badge.internacional { background: rgba(245,158,11,.15); color: var(--internacional); }
-  .badge.iof { background: rgba(249,115,22,.15); color: var(--iof); }
-  .badge.outro_lancamento { background: rgba(167,139,250,.15); color: var(--outro); }
+  .badge.compra { background: var(--panel2); color: var(--text); }
+  .badge.estorno { background: rgba(47,158,68,.15); color: var(--estorno); }
+  .badge.cancelamento { background: rgba(14,116,144,.15); color: var(--cancelamento); }
+  .badge.pagamento { background: rgba(29,78,216,.15); color: var(--pagamento); }
+  .badge.internacional { background: rgba(13,148,136,.15); color: var(--internacional); }
+  .badge.iof { background: rgba(194,65,12,.15); color: var(--iof); }
+  .badge.outro_lancamento { background: rgba(109,40,217,.15); color: var(--outro); }
   .bank-tag { font-size: 11px; color: var(--muted); }
   .muted { color: var(--muted); }
   .count { color: var(--muted); font-size: 12px; margin-left: 6px; }
@@ -210,6 +210,11 @@
   .installments-wrap h2 { margin: 0 0 2px; font-size: 15px; font-weight: 650; }
   .installments-wrap .summary-row { padding: 14px 0; background: transparent; border: none; }
   .installments-wrap .table-wrap { padding: 0 0 14px; }
+
+  .card.hero { flex: 1 1 260px; min-width: 240px; background: var(--panel2); }
+  .card.hero .value { font-size: 27px; }
+  .card.hero .breakdown { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 8px; font-size: 13px; font-weight: 600; }
+  .card.hero .breakdown .itau-label, .card.hero .breakdown .nubank-label { white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -221,7 +226,6 @@
 
 <section class="installments-wrap">
   <h2>Parcelas em andamento — compromissos futuros ainda não cobrados</h2>
-  <div class="subtitle">Itaú: fatura em aberto capturada ao vivo via app (parcial — ciclo fecha dia 25, mais lançamentos ainda podem entrar) + "demais faturas" (dez/2026 em diante), somando parcelas continuando de compras antigas (PDF de outubro) com parcelas futuras de compras novas calculadas pelo valor fixo da parcela já conhecido (ver composição abaixo). Nubank: saldo em aberto declarado na fatura mais recente (venc. 01/10/2026). Valores que ainda vão cair em faturas futuras — não entram nos totais de gasto abaixo, que são só histórico já cobrado.</div>
   <div class="summary-row" id="installmentsSummary"></div>
   <div class="table-wrap">
     <table>
@@ -512,6 +516,28 @@ function render() {
 
 function renderInstallments() {
   const it = INSTALLMENTS.itau, nu = INSTALLMENTS.nubank;
+  const heroCards = [
+    {
+      label: 'Próxima fatura (Itaú + Nubank)',
+      total: fmtMoney(it.proxima_fatura + nu.proxima_fatura),
+      breakdown: [['itau', 'Itaú', fmtMoney(it.proxima_fatura)], ['nubank', 'Nubank', fmtMoney(nu.proxima_fatura)]],
+    },
+    {
+      label: 'Total compromisso futuro (Itaú + Nubank)',
+      total: fmtMoney(INSTALLMENTS.total_compromissos_futuros),
+      breakdown: [['itau', 'Itaú', fmtMoney(it.total)], ['nubank', 'Nubank', fmtMoney(nu.total_aberto)]],
+    },
+  ];
+  const heroHtml = heroCards.map(c => `
+    <div class="card hero">
+      <div class="label">${c.label}</div>
+      <div class="value">${c.total}</div>
+      <div class="breakdown">
+        ${c.breakdown.map(([bank, name, val]) => `<span class="${bank}-label"><span class="bank-dot ${bank}"></span>${name} ${val}</span>`).join('')}
+      </div>
+    </div>
+  `).join('');
+
   const cards = [
     ['Itaú — fatura Nov em aberto (parcial, ao vivo)', fmtMoney(it.proxima_fatura), ''],
     ['Itaú — demais faturas futuras', fmtMoney(it.demais_faturas), ''],
@@ -520,7 +546,7 @@ function renderInstallments() {
     ['Nubank — total em aberto (parcelas futuras)', fmtMoney(nu.total_aberto), 'pos'],
     ['Total — compromisso futuro (ambos cartões)', fmtMoney(INSTALLMENTS.total_compromissos_futuros), 'pos'],
   ];
-  document.getElementById('installmentsSummary').innerHTML = cards.map(([label,val,cls]) =>
+  document.getElementById('installmentsSummary').innerHTML = heroHtml + cards.map(([label,val,cls]) =>
     `<div class="card"><div class="label">${label}</div><div class="value ${cls}">${val}</div></div>`
   ).join('');
 
@@ -636,6 +662,7 @@ document.getElementById('resetBtn').addEventListener('click', () => {
 
 populateFilters();
 groupBy = 'category';
+document.querySelectorAll('.group-toggle .chip').forEach(c => c.classList.remove('active'));
 document.querySelector('.group-toggle .chip[data-group=category]').classList.add('active');
 render();
 renderInstallments();
