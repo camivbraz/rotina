@@ -539,12 +539,7 @@ function renderInstallments() {
   `).join('');
 
   const cards = [
-    ['Itaú — fatura Nov em aberto (parcial, ao vivo)', fmtMoney(it.proxima_fatura), ''],
-    ['Itaú — demais faturas futuras', fmtMoney(it.demais_faturas), ''],
-    ['Itaú — total em parcelas futuras', fmtMoney(it.total), 'pos'],
-    ['Nubank — próxima fatura (saldo em aberto)', fmtMoney(nu.proxima_fatura), ''],
-    ['Nubank — total em aberto (parcelas futuras)', fmtMoney(nu.total_aberto), 'pos'],
-    ['Total — compromisso futuro (ambos cartões)', fmtMoney(INSTALLMENTS.total_compromissos_futuros), 'pos'],
+    ['Itaú — demais faturas futuras (além da próxima)', fmtMoney(it.demais_faturas), ''],
   ];
   document.getElementById('installmentsSummary').innerHTML = heroHtml + cards.map(([label,val,cls]) =>
     `<div class="card"><div class="label">${label}</div><div class="value ${cls}">${val}</div></div>`

@@ -489,20 +489,38 @@
 <div class="view" id="faturas" style="margin-left:-16px; margin-right:-16px; max-width:none;">
 
 <p style="font-size:13px;color:var(--suave);margin:0 16px 10px">⚠️ Ciclo de 03/11 (Nubank) e 01/11 (Itaú) — ambos já pagos — ainda não foram incorporados aos totais abaixo. Dashboard parado no ciclo de 07/10.</p>
-<iframe src="faturas.html" style="display:block; width:100%; height:calc(100vh - 170px); min-height:520px; border:none;"></iframe>
+<iframe id="faturasFrame" src="faturas.html" style="display:block; width:100%; min-height:400px; border:none;"></iframe>
 
 </div>
 
 <div class="rodape" style="margin-top:40px">Hub pessoal — Skincare · Galinheiro · Pétala · Faturas</div>
 
 <script>
+function ajustarAlturaFaturas() {
+  var frame = document.getElementById('faturasFrame');
+  if (!frame || !frame.contentWindow) return;
+  try {
+    var doc = frame.contentWindow.document;
+    frame.style.height = doc.documentElement.scrollHeight + 'px';
+  } catch (e) {}
+}
+
 function trocar(id, btn) {
   document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('ativo'); });
   document.getElementById(id).classList.add('ativo');
   document.querySelectorAll('.seletor button').forEach(function(b){ b.classList.remove('ativo'); });
   btn.classList.add('ativo');
   window.scrollTo(0,0);
+  if (id === 'faturas') { setTimeout(ajustarAlturaFaturas, 50); }
 }
+
+document.getElementById('faturasFrame').addEventListener('load', function() {
+  ajustarAlturaFaturas();
+  try {
+    var doc = this.contentWindow.document;
+    new ResizeObserver(ajustarAlturaFaturas).observe(doc.body);
+  } catch (e) {}
+});
 </script>
 
 </body>
