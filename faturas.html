@@ -538,12 +538,7 @@ function renderInstallments() {
     </div>
   `).join('');
 
-  const cards = [
-    ['Itaú — demais faturas futuras (além da próxima)', fmtMoney(it.demais_faturas), ''],
-  ];
-  document.getElementById('installmentsSummary').innerHTML = heroHtml + cards.map(([label,val,cls]) =>
-    `<div class="card"><div class="label">${label}</div><div class="value ${cls}">${val}</div></div>`
-  ).join('');
+  document.getElementById('installmentsSummary').innerHTML = heroHtml;
 
   document.getElementById('installmentsBody').innerHTML = it.items.map(d => `
     <tr>
