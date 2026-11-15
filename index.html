@@ -107,6 +107,7 @@
   <button data-target="galinheiro" onclick="trocar('galinheiro', this)">Galinheiro</button>
   <button data-target="petala" onclick="trocar('petala', this)">Pétala</button>
   <button data-target="faturas" onclick="trocar('faturas', this)">Faturas</button>
+  <button data-target="viagem" onclick="trocar('viagem', this)">Viagem</button>
 </div>
 
 <!-- ================= SKINCARE ================= -->
@@ -493,11 +494,16 @@
 
 </div>
 
-<div class="rodape" style="margin-top:40px">Hub pessoal — Skincare · Galinheiro · Pétala · Faturas</div>
+<!-- ================= VIAGEM ================= -->
+<div class="view" id="viagem" style="margin-left:-16px; margin-right:-16px; max-width:none;">
+<iframe id="viagemFrame" src="viagem.html" style="display:block; width:100%; min-height:400px; border:none;"></iframe>
+</div>
+
+<div class="rodape" style="margin-top:40px">Hub pessoal — Skincare · Galinheiro · Pétala · Faturas · Viagem</div>
 
 <script>
-function ajustarAlturaFaturas() {
-  var frame = document.getElementById('faturasFrame');
+function ajustarAlturaIframe(frameId) {
+  var frame = document.getElementById(frameId);
   if (!frame || !frame.contentWindow) return;
   try {
     var doc = frame.contentWindow.document;
@@ -511,14 +517,23 @@ function trocar(id, btn) {
   document.querySelectorAll('.seletor button').forEach(function(b){ b.classList.remove('ativo'); });
   btn.classList.add('ativo');
   window.scrollTo(0,0);
-  if (id === 'faturas') { setTimeout(ajustarAlturaFaturas, 50); }
+  if (id === 'faturas') { setTimeout(function(){ ajustarAlturaIframe('faturasFrame'); }, 50); }
+  if (id === 'viagem') { setTimeout(function(){ ajustarAlturaIframe('viagemFrame'); }, 50); }
 }
 
 document.getElementById('faturasFrame').addEventListener('load', function() {
-  ajustarAlturaFaturas();
+  ajustarAlturaIframe('faturasFrame');
   try {
     var doc = this.contentWindow.document;
-    new ResizeObserver(ajustarAlturaFaturas).observe(doc.body);
+    new ResizeObserver(function(){ ajustarAlturaIframe('faturasFrame'); }).observe(doc.body);
+  } catch (e) {}
+});
+
+document.getElementById('viagemFrame').addEventListener('load', function() {
+  ajustarAlturaIframe('viagemFrame');
+  try {
+    var doc = this.contentWindow.document;
+    new ResizeObserver(function(){ ajustarAlturaIframe('viagemFrame'); }).observe(doc.body);
   } catch (e) {}
 });
 </script>
