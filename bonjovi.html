@@ -211,7 +211,7 @@ function desenhar() {
     var cls = f ? 'feita' : passado ? 'perdida' : e.n === proxima ? 'ativa' : 'bloqueada';
     var st = f ? '✓ ' + f.hora : passado ? 'não registrada' : e.n === proxima ? 'agora' : '🔒';
     if (cls === 'bloqueada') {
-      lista.insertAdjacentHTML('beforeend', '<div class="card bloqueada"><div class="topo"><div class="num">' + e.n + '</div><div><h2>Etapa ' + e.n + '</h2></div><div class="status">🔒</div></div></div>');
+      lista.insertAdjacentHTML('beforeend', '<div class="card bloqueada"><div class="topo"><div class="num">🔒</div><div><h2>Faça a anterior pra saber a próxima coisa que precisa fazer</h2></div></div></div>');
       return;
     }
     var h = '<div class="card ' + cls + '"><div class="topo"><div class="num">' + e.n + '</div><div>' +
