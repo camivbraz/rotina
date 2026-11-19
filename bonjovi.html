@@ -49,6 +49,11 @@
   .perdida .status { color:var(--alerta); }
   .bloqueada .status { color:var(--suave); }
   .thumb { display:block; margin-top:10px; width:72px; height:72px; object-fit:cover; border-radius:10px; border:1px solid var(--borda); }
+  .ver { margin-top:10px; background:#fff; border:1px solid var(--borda); color:var(--marrom); border-radius:10px; padding:8px 12px; font:600 14px inherit; font-family:inherit; cursor:pointer; }
+  .lightbox { position:fixed; inset:0; background:rgba(20,16,14,.94); z-index:50; overflow:auto; -webkit-overflow-scrolling:touch; touch-action:pan-x pan-y pinch-zoom; }
+  .lightbox img { display:block; width:100%; height:auto; }
+  .lightbox .fechar { position:fixed; top:12px; right:12px; background:#fff; color:var(--texto); border:0; border-radius:99px; padding:9px 16px; font:600 15px inherit; font-family:inherit; z-index:51; }
+  .lightbox .carregando { color:#fff; text-align:center; padding:40vh 20px 0; }
   .vazio { text-align:center; color:var(--suave); padding:28px 10px; font-size:14px; }
 </style>
 </head>
@@ -69,6 +74,8 @@ var ENDPOINT = 'https://script.google.com/macros/s/AKfycbzZYSneEpRyZgEtqWzmRO7bK
 var DIAS = ['2026-11-20','2026-11-21','2026-11-22','2026-11-23'];
 var TESTE = new URLSearchParams(location.search).get('teste');   // ?teste=1, 2, 3... usa um dia separado (19/11, 18/11...), sem tocar nos dias reais
 if (TESTE) { var dt = '2026-11-' + String(20 - Math.min(Math.max(parseInt(TESTE, 10) || 1, 1), 9)).padStart(2, '0'); DIAS = [dt]; }
+var VER = null;   // chave da Cami para ver as fotos (guardada neste navegador; vem de ?ver=)
+try { var kv = new URLSearchParams(location.search).get('ver'); if (kv) localStorage.setItem('bj_ver', kv); VER = localStorage.getItem('bj_ver'); } catch (e) {}
 var GOTAS_CLENIL = 10;             // gotas = 0,5 ml da ampola. CONFIRMAR antes de publicar.
 
 var ETAPAS = [
@@ -170,6 +177,21 @@ function aoEscolherFoto(n, input) {
   }).then(function () { desenhar(); });
 }
 
+function verFoto(n) {
+  var box = document.createElement('div');
+  box.className = 'lightbox';
+  box.innerHTML = '<button class="fechar">Fechar</button><div class="carregando">Carregando foto…</div>';
+  box.querySelector('.fechar').onclick = function () { box.remove(); };
+  document.body.appendChild(box);
+  fetch(ENDPOINT + '?day=' + diaSel + '&photo=' + n + '&key=' + encodeURIComponent(VER))
+    .then(function (r) { return r.json(); })
+    .then(function (j) {
+      if (!j || !j.ok) throw new Error((j && j.error) || 'falha');
+      box.querySelector('.carregando').outerHTML = '<img alt="Foto da etapa ' + n + '" src="' + j.img + '">';
+    })
+    .catch(function (e) { box.querySelector('.carregando').textContent = 'Não consegui abrir a foto (' + e.message + ').'; });
+}
+
 // ===== TELA =====
 function desenhar() {
   var aviso = document.getElementById('aviso');
@@ -228,6 +250,7 @@ function desenhar() {
       h += '</div>';
     }
     if (f && f.thumb) h += '<img class="thumb" alt="" src="' + f.thumb + '">';
+    if (f && VER && ENDPOINT) h += '<button class="ver" onclick="verFoto(' + e.n + ')">🔍 Ver foto</button>';
     h += '</div>';
     lista.insertAdjacentHTML('beforeend', h);
   });

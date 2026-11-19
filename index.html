@@ -23,9 +23,9 @@
   .sub { color: var(--suave); font-size: 13px; margin-bottom: 16px; }
 
   /* seletor de projeto */
-  .seletor { display: flex; gap: 8px; margin-bottom: 24px; position: sticky; top: 0; background: #fdfaf8; padding: 10px 0; z-index: 10; }
+  .seletor { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; position: sticky; top: 0; background: #fdfaf8; padding: 10px 0; z-index: 10; }
   .seletor button {
-    flex: 1; border: 1px solid var(--borda); background: #fff; color: var(--marrom);
+    flex: 1 1 calc(33.333% - 8px); border: 1px solid var(--borda); background: #fff; color: var(--marrom);
     font-size: 14px; font-weight: 600; padding: 10px 6px; border-radius: 10px;
     cursor: pointer; font-family: inherit;
   }
