@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bon Jovi — Diário de cuidados</title>
+<style>
+  :root { --marrom:#7a5c52; --areia:#f5ece8; --borda:#e6d9d2; --texto:#2e2a28; --suave:#8b8079; --verde:#5a7050; --verde-bg:#eef2ea; --med:#b4533c; --med-bg:#fbeee9; --alerta:#a33a2a; }
+  * { box-sizing: border-box; -webkit-text-size-adjust: 100%; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; color: var(--texto); background:#fdfaf8; margin:0; padding:16px 16px 60px; line-height:1.5; max-width:640px; margin-left:auto; margin-right:auto; font-size:16px; }
+  h1 { font-size:22px; color:var(--marrom); margin:0 0 2px; letter-spacing:-0.5px; }
+  .sub { color:var(--suave); font-size:13px; margin-bottom:14px; }
+  .aviso { background:#fff6e5; border:1px solid #f0d9a8; color:#7a5a12; border-radius:10px; padding:10px 12px; font-size:13px; margin-bottom:14px; }
+  .dias { display:flex; gap:8px; margin-bottom:14px; }
+  .dias button { flex:1; border:1px solid var(--borda); background:#fff; color:var(--marrom); font:600 14px inherit; font-family:inherit; padding:9px 4px; border-radius:10px; cursor:pointer; line-height:1.2; }
+  .dias button small { display:block; font-weight:500; font-size:11px; color:var(--suave); }
+  .dias button.ativo { background:var(--marrom); border-color:var(--marrom); color:#fff; }
+  .dias button.ativo small { color:#f0e4de; }
+  .dias button:disabled { opacity:.45; cursor:not-allowed; }
+  .prog { height:8px; background:var(--areia); border-radius:99px; overflow:hidden; margin-bottom:6px; }
+  .prog > div { height:100%; background:var(--verde); width:0; transition:width .3s; }
+  .progtxt { font-size:13px; color:var(--suave); margin-bottom:16px; }
+  .card { border:1px solid var(--borda); background:#fff; border-radius:14px; padding:14px; margin-bottom:12px; }
+  .card .topo { display:flex; align-items:center; gap:10px; }
+  .num { flex:none; width:30px; height:30px; border-radius:50%; background:var(--areia); color:var(--marrom); font-weight:700; display:flex; align-items:center; justify-content:center; font-size:14px; }
+  .card h2 { font-size:16px; margin:0; color:var(--texto); }
+  .per { font-size:11px; text-transform:uppercase; letter-spacing:.6px; color:var(--suave); font-weight:600; }
+  .corpo { margin-top:10px; font-size:15px; }
+  .corpo ul { margin:6px 0 0; padding-left:20px; }
+  .med { margin-top:8px; background:var(--med-bg); border:1px solid #f0cfc4; color:var(--med); border-radius:10px; padding:8px 10px; font-weight:600; font-size:15px; }
+  .nota { color:var(--suave); font-size:13px; margin-top:6px; }
+  .acao { margin-top:12px; }
+  .btn { display:block; width:100%; text-align:center; background:var(--marrom); color:#fff; border:0; border-radius:12px; padding:13px; font-size:16px; font-weight:600; font-family:inherit; cursor:pointer; }
+  .btn:disabled { opacity:.6; }
+  input[type=file] { display:none; }
+  .erro { color:var(--alerta); font-size:13px; margin-top:8px; }
+  .card.bloqueada { background:#faf7f5; opacity:.65; }
+  .card.bloqueada .corpo, .card.bloqueada .acao { display:none; }
+  .card.bloqueada .num { background:#ece6e2; }
+  .card.ativa { border:2px solid var(--marrom); box-shadow:0 2px 10px rgba(122,92,82,.12); }
+  .card.feita { background:var(--verde-bg); border-color:#cfdcc6; }
+  .card.feita .num { background:var(--verde); color:#fff; }
+  .card.feita .corpo { display:none; }
+  .card.perdida { border-color:#e8b9b0; background:#fdf1ef; }
+  .card.perdida .num { background:var(--alerta); color:#fff; }
+  .card.perdida .corpo, .card.perdida .acao { display:none; }
+  .status { margin-left:auto; font-size:12px; font-weight:600; text-align:right; white-space:nowrap; }
+  .feita .status { color:var(--verde); }
+  .perdida .status { color:var(--alerta); }
+  .bloqueada .status { color:var(--suave); }
+  .thumb { display:block; margin-top:10px; width:72px; height:72px; object-fit:cover; border-radius:10px; border:1px solid var(--borda); }
+  .vazio { text-align:center; color:var(--suave); padding:28px 10px; font-size:14px; }
+</style>
+</head>
+<body>
+
+<h1>🐶 Bon Jovi — Diário de cuidados</h1>
+<div class="sub">Cada etapa só libera depois de você enviar a foto da anterior.</div>
+
+<div id="aviso"></div>
+<div class="dias" id="dias"></div>
+<div class="prog"><div id="barra"></div></div>
+<div class="progtxt" id="progtxt"></div>
+<div id="lista"></div>
+
+<script>
+// ===== CONFIGURAÇÃO =====
+var ENDPOINT = 'https://script.google.com/macros/s/AKfycbzZYSneEpRyZgEtqWzmRO7bK2vQoSib2CZKCCMNcJHRw15qBYRgVMkZ91vVJlpoYo7u/exec'; // web app do Apps Script (conta pessoal)
+var DIAS = ['2026-11-20','2026-11-21','2026-11-22','2026-11-23'];
+var TESTE = new URLSearchParams(location.search).get('teste');   // ?teste=1, 2, 3... usa um dia separado (19/11, 18/11...), sem tocar nos dias reais
+if (TESTE) { var dt = '2026-11-' + String(20 - Math.min(Math.max(parseInt(TESTE, 10) || 1, 1), 9)).padStart(2, '0'); DIAS = [dt]; }
+var GOTAS_CLENIL = 10;             // gotas = 0,5 ml da ampola. CONFIRMAR antes de publicar.
+
+var ETAPAS = [
+  { n:1, per:'Manhã', t:'Bombinha', itens:['1 pump','Contar até 10, devagar'] },
+  { n:2, t:'Trocar o tapete de necessidades' },
+  { n:3, t:'Refeição 1', itens:['½ scoop de ração','⅓ do pacote de comida'], med:'+ 1 ml de ciclosporina' },
+  { n:4, t:'Tirar a comida do congelador', nota:'Para o dia seguinte.' },
+  { n:5, t:'Refeição 2', itens:['½ scoop de ração','⅓ do pacote de comida'] },
+  { n:6, per:'Tarde', t:'Bombinha', itens:['1 pump','Contar até 10, devagar'] },
+  { n:7, t:'Refeição 3', itens:['½ scoop de ração','⅓ do pacote de comida'], med:'+ 1 ml de UC-II' },
+  { n:8, t:'Inalação', itens:['5 ml de soro fisiológico','Clenil: ' + GOTAS_CLENIL + ' gotas (direto da ampola)'] }
+];
+
+// ===== ESTADO =====
+var params = new URLSearchParams(location.search);
+var hoje = TESTE ? DIAS[0] : (params.get('hoje') || new Date().toLocaleDateString('en-CA', { timeZone:'America/Sao_Paulo' }));
+var diaSel = null;
+var estado = {};   // { 'AAAA-MM-DD': { '1': { hora:'08:12', thumb:'data:...' } } }
+try { estado = JSON.parse(localStorage.getItem('bj_estado_v1') || '{}'); } catch (e) { estado = {}; }
+var mensagemErro = {};
+
+function salvarLocal() { try { localStorage.setItem('bj_estado_v1', JSON.stringify(estado)); } catch (e) {} }
+function fmtDia(d) { var p = d.split('-'); return p[2] + '/' + p[1]; }
+function horaAgora() { return new Date().toLocaleTimeString('pt-BR', { timeZone:'America/Sao_Paulo', hour:'2-digit', minute:'2-digit' }); }
+
+function diaInicial() {
+  if (DIAS.indexOf(hoje) >= 0) return hoje;
+  return hoje < DIAS[0] ? DIAS[0] : DIAS[DIAS.length - 1];
+}
+
+// ===== SERVIDOR =====
+function buscarDia(dia) {
+  if (!ENDPOINT) return Promise.resolve();
+  return fetch(ENDPOINT + '?day=' + dia).then(function (r) { return r.json(); }).then(function (j) {
+    if (!j || !j.ok) return;
+    var local = estado[dia] || {};
+    var novo = {};
+    Object.keys(j.done || {}).forEach(function (k) {
+      novo[k] = { hora: j.done[k], thumb: local[k] && local[k].thumb };
+    });
+    estado[dia] = novo;
+    salvarLocal();
+  }).catch(function () {});
+}
+
+function enviar(dia, n, dataUrl) {
+  if (!ENDPOINT) return Promise.resolve({ ok:true, hora:horaAgora() });
+  var corpo = JSON.stringify({ day:dia, step:n, photo:dataUrl.split(',')[1] });
+  return fetch(ENDPOINT, { method:'POST', body:corpo }).then(function (r) { return r.json(); });
+}
+
+// ===== IMAGEM =====
+function reduzir(file) {
+  return new Promise(function (res, rej) {
+    var img = new Image(), url = URL.createObjectURL(file);
+    img.onload = function () {
+      var s = Math.min(1, 1280 / Math.max(img.width, img.height));
+      var c = document.createElement('canvas');
+      c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url);
+      res(c.toDataURL('image/jpeg', 0.72));
+    };
+    img.onerror = function () { rej(new Error('Não consegui abrir a foto.')); };
+    img.src = url;
+  });
+}
+function miniatura(dataUrl) {
+  return new Promise(function (res) {
+    var img = new Image();
+    img.onload = function () {
+      var c = document.createElement('canvas'); c.width = 144; c.height = 144;
+      var m = Math.min(img.width, img.height);
+      c.getContext('2d').drawImage(img, (img.width - m) / 2, (img.height - m) / 2, m, m, 0, 0, 144, 144);
+      res(c.toDataURL('image/jpeg', 0.6));
+    };
+    img.src = dataUrl;
+  });
+}
+
+function aoEscolherFoto(n, input) {
+  var file = input.files && input.files[0];
+  if (!file) return;
+  mensagemErro[n] = '';
+  var btn = document.getElementById('btn' + n);
+  btn.disabled = true; btn.textContent = 'Enviando…';
+  var dia = diaSel;
+  reduzir(file).then(function (dataUrl) {
+    return enviar(dia, n, dataUrl).then(function (r) {
+      if (!r || !r.ok) throw new Error((r && r.error) || 'Falha ao enviar.');
+      return miniatura(dataUrl).then(function (th) {
+        estado[dia] = estado[dia] || {};
+        estado[dia][n] = { hora: r.hora || horaAgora(), thumb: th };
+        salvarLocal();
+      });
+    });
+  }).catch(function (e) {
+    mensagemErro[n] = (e && e.message ? e.message : 'Falha ao enviar.') + ' Tente de novo.';
+  }).then(function () { desenhar(); });
+}
+
+// ===== TELA =====
+function desenhar() {
+  var aviso = document.getElementById('aviso');
+  aviso.innerHTML = (TESTE ? '<div class="aviso">🧪 <b>Modo teste.</b> Vale só pra você: grava no dia ' + fmtDia(DIAS[0]) + ' (fora do período 20 a 23/11). Pra refazer do zero, use <b>?teste=' + (parseInt(TESTE, 10) + 1 || 2) + '</b>.</div>' : '') +
+    (ENDPOINT ? '' : '<div class="aviso">Sem envio configurado: as fotos não estão sendo enviadas pra ninguém.</div>');
+
+  var dias = document.getElementById('dias');
+  dias.innerHTML = '';
+  var nomes = ['dom','seg','ter','qua','qui','sex','sáb'];
+  DIAS.forEach(function (d) {
+    var b = document.createElement('button');
+    var dt = new Date(d + 'T12:00:00');
+    b.innerHTML = fmtDia(d) + '<small>' + nomes[dt.getDay()] + '</small>';
+    b.disabled = d > hoje;
+    if (d === diaSel) b.className = 'ativo';
+    b.onclick = function () { diaSel = d; buscarDia(d).then(desenhar); desenhar(); };
+    dias.appendChild(b);
+  });
+
+  var lista = document.getElementById('lista');
+  lista.innerHTML = '';
+  if (diaSel > hoje) {
+    lista.innerHTML = '<div class="vazio">O diário começa em ' + fmtDia(DIAS[0]) + '.</div>';
+    document.getElementById('barra').style.width = '0';
+    document.getElementById('progtxt').textContent = '';
+    return;
+  }
+
+  var feitos = estado[diaSel] || {};
+  var passado = diaSel < hoje;
+  var proxima = 1;
+  while (feitos[proxima]) proxima++;
+  var total = ETAPAS.length, qtd = Object.keys(feitos).length;
+  document.getElementById('barra').style.width = (qtd / total * 100) + '%';
+  document.getElementById('progtxt').textContent = qtd + ' de ' + total + ' etapas feitas';
+
+  ETAPAS.forEach(function (e) {
+    var f = feitos[e.n];
+    var cls = f ? 'feita' : passado ? 'perdida' : e.n === proxima ? 'ativa' : 'bloqueada';
+    var st = f ? '✓ ' + f.hora : passado ? 'não registrada' : e.n === proxima ? 'agora' : '🔒';
+    var h = '<div class="card ' + cls + '"><div class="topo"><div class="num">' + e.n + '</div><div>' +
+      (e.per ? '<div class="per">' + e.per + '</div>' : '') + '<h2>' + e.t + '</h2></div><div class="status">' + st + '</div></div>';
+    h += '<div class="corpo">';
+    if (e.itens) h += '<ul>' + e.itens.map(function (i) { return '<li>' + i + '</li>'; }).join('') + '</ul>';
+    if (e.med) h += '<div class="med">' + e.med + '</div>';
+    if (e.nota) h += '<div class="nota">' + e.nota + '</div>';
+    h += '</div>';
+    if (cls === 'ativa') {
+      h += '<div class="acao"><label><input type="file" accept="image/*" id="foto' + e.n + '" onchange="aoEscolherFoto(' + e.n + ', this)">' +
+        '<button class="btn" id="btn' + e.n + '" onclick="document.getElementById(\'foto' + e.n + '\').click()">📷 Tirar foto e concluir</button></label>';
+      if (mensagemErro[e.n]) h += '<div class="erro">' + mensagemErro[e.n] + '</div>';
+      h += '</div>';
+    }
+    if (f && f.thumb) h += '<img class="thumb" alt="" src="' + f.thumb + '">';
+    h += '</div>';
+    lista.insertAdjacentHTML('beforeend', h);
+  });
+}
+
+diaSel = diaInicial();
+desenhar();
+buscarDia(diaSel).then(desenhar);
+</script>
+</body>
+</html>
