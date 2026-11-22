@@ -508,6 +508,20 @@
 <div class="rodape" style="margin-top:40px">Hub pessoal — Skincare · Galinheiro · Pétala · Faturas · Viagem · Bon Jovi</div>
 
 <script>
+// Auto-atualização: atalhos do celular guardam o hub em cache. Se houver versão nova no servidor, recarrega uma vez.
+// >>> Trocar BUILD a cada mudança neste arquivo. <<<
+(function () {
+  var BUILD = '20261122a';
+  fetch('index.html?nc=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.text(); }).then(function (t) {
+    var m = t.match(/var BUILD = '([^']+)'/);
+    if (!m || m[1] === BUILD) return;
+    try { if (sessionStorage.getItem('hub_reload') === m[1]) return; sessionStorage.setItem('hub_reload', m[1]); } catch (e) {}
+    location.replace(location.pathname + location.search.replace(/[?&]v=[^&]*/g, '') + (location.search.indexOf('?') < 0 ? '?' : '&') + 'v=' + m[1] + location.hash);
+  }).catch(function () {});
+})();
+</script>
+
+<script>
 function ajustarAlturaIframe(frameId) {
   var frame = document.getElementById(frameId);
   if (!frame || !frame.contentWindow) return;
