@@ -544,7 +544,11 @@ document.getElementById('viagemFrame').addEventListener('load', function() {
   } catch (e) {}
 });
 
-document.getElementById('bonjoviFrame').src = 'bonjovi.html?t=' + Date.now();   // evita cache do iframe
+(function(){   // chave da Cami pra ver fotos: aceita ?ver= no hub, guarda e repassa ao iframe; evita cache do iframe
+  var ver = '';
+  try { var q = new URLSearchParams(location.search).get('ver'); if (q) localStorage.setItem('bj_ver', q); ver = localStorage.getItem('bj_ver') || ''; } catch (e) {}
+  document.getElementById('bonjoviFrame').src = 'bonjovi.html?t=' + Date.now() + (ver ? '&ver=' + encodeURIComponent(ver) : '');
+})();
 
 document.getElementById('bonjoviFrame').addEventListener('load', function() {
   ajustarAlturaIframe('bonjoviFrame');
