@@ -11,8 +11,8 @@
   h1 { font-size:22px; color:var(--marrom); margin:0 0 2px; letter-spacing:-0.5px; }
   .sub { color:var(--suave); font-size:13px; margin-bottom:14px; }
   .aviso { background:#fff6e5; border:1px solid #f0d9a8; color:#7a5a12; border-radius:10px; padding:10px 12px; font-size:13px; margin-bottom:14px; }
-  .dias { display:flex; gap:8px; margin-bottom:14px; }
-  .dias button { flex:1; border:1px solid var(--borda); background:#fff; color:var(--marrom); font:600 14px inherit; font-family:inherit; padding:9px 4px; border-radius:10px; cursor:pointer; line-height:1.2; }
+  .dias { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }
+  .dias button { flex:1 0 17%; border:1px solid var(--borda); background:#fff; color:var(--marrom); font:600 14px inherit; font-family:inherit; padding:9px 4px; border-radius:10px; cursor:pointer; line-height:1.2; }
   .dias button small { display:block; font-weight:500; font-size:11px; color:var(--suave); }
   .dias button.ativo { background:var(--marrom); border-color:var(--marrom); color:#fff; }
   .dias button.ativo small { color:#f0e4de; }
@@ -71,19 +71,19 @@
 <script>
 // ===== CONFIGURAÇÃO =====
 var ENDPOINT = 'https://script.google.com/macros/s/AKfycbzZYSneEpRyZgEtqWzmRO7bK2vQoSib2CZKCCMNcJHRw15qBYRgVMkZ91vVJlpoYo7u/exec'; // web app do Apps Script (conta pessoal)
-var DIAS = ['2026-11-20','2026-11-21','2026-11-22','2026-11-23'];
+var DIAS = ['2026-11-28','2026-11-29','2026-11-30','2026-12-01','2026-12-02','2026-12-03','2026-12-04','2026-12-05','2026-12-06','2026-12-07','2026-12-08'];
 var TESTE = new URLSearchParams(location.search).get('teste');   // ?teste=1, 2, 3... usa um dia separado (19/11, 18/11...), sem tocar nos dias reais
 if (TESTE) { var dt = '2026-11-' + String(20 - Math.min(Math.max(parseInt(TESTE, 10) || 1, 1), 9)).padStart(2, '0'); DIAS = [dt]; }
 var VER = null;   // chave da Cami para ver as fotos (guardada neste navegador; vem de ?ver=)
 try { var kv = new URLSearchParams(location.search).get('ver'); if (kv) localStorage.setItem('bj_ver', kv); VER = localStorage.getItem('bj_ver'); } catch (e) {}
-var GOTAS_CLENIL = 10;             // gotas = 0,5 ml da ampola. CONFIRMAR antes de publicar.
+var GOTAS_CLENIL = 15;             // atualizado 27/11 (antes 10)
 
 var ETAPAS = [
   { n:1, per:'Manhã', t:'Bombinha', itens:['1 pump','Contar até 10, devagar'] },
   { n:2, t:'Trocar o tapete de necessidades' },
   { n:3, t:'Refeição 1', itens:['½ scoop de ração','⅓ do pacote de comida'], med:'+ 1 ml de ciclosporina' },
   { n:4, t:'Tirar a comida do congelador', nota:'Para o dia seguinte.' },
-  { n:5, t:'Refeição 2', itens:['½ scoop de ração','⅓ do pacote de comida'] },
+  { n:5, t:'Refeição 2 (almoço)', itens:['½ scoop de ração','⅓ do pacote de comida'], med:'+ 1 ml de silamarina' },
   { n:6, per:'Tarde', t:'Bombinha', itens:['1 pump','Contar até 10, devagar'] },
   { n:7, t:'Refeição 3', itens:['½ scoop de ração','⅓ do pacote de comida'], med:'+ 1 ml de UC-II' },
   { n:8, t:'Inalação', itens:['5 ml de soro fisiológico','Clenil: ' + GOTAS_CLENIL + ' gotas (direto da ampola)'] }
@@ -202,7 +202,7 @@ function verFoto(n) {
 // ===== TELA =====
 function desenhar() {
   var aviso = document.getElementById('aviso');
-  aviso.innerHTML = (TESTE ? '<div class="aviso">🧪 <b>Modo teste.</b> Vale só pra você: grava no dia ' + fmtDia(DIAS[0]) + ' (fora do período 20 a 23/11). Pra refazer do zero, use <b>?teste=' + (parseInt(TESTE, 10) + 1 || 2) + '</b>.</div>' : '') +
+  aviso.innerHTML = (TESTE ? '<div class="aviso">🧪 <b>Modo teste.</b> Vale só pra você: grava no dia ' + fmtDia(DIAS[0]) + ' (fora do período 28/11 a 08/12). Pra refazer do zero, use <b>?teste=' + (parseInt(TESTE, 10) + 1 || 2) + '</b>.</div>' : '') +
     (ENDPOINT ? '' : '<div class="aviso">Sem envio configurado: as fotos não estão sendo enviadas pra ninguém.</div>');
 
   var dias = document.getElementById('dias');
